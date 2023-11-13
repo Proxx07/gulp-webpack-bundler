@@ -1,0 +1,1 @@
+!function(){"use strict";var o=1,n=41;console.log("Main page JS"),console.log(o+n)}();

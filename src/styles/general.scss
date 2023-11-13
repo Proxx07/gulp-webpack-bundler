@@ -1,0 +1,42 @@
+// Common styles for every page
+@import "./global/global";
+@import "./blocks/header";
+@import "./blocks/footer";
+
+.site-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 320px) auto;
+  gap: 1rem;
+
+  &.without-navbar {
+    grid-template-columns: 1fr;
+  }
+}
+
+nav {
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: 0;
+
+    li {
+      list-style: none;
+    }
+  }
+}
+
+.main {
+  background-color: cornflowerblue;
+  padding: 2rem;
+}
+
+h1 {
+  margin: 0;
+}
