@@ -25,88 +25,74 @@ const TASK_NAME = require('./tasks.js');
 
 gulp.task(TASK_NAME.CLEAN, (done) => {
   if (fs.existsSync('./docs')) {
-    return (
-      gulp.src('./docs/', { read: false })
-        .pipe(clean({ force: true }))
-    )
+    return gulp.src('./docs/', { read: false }).pipe(clean({ force: true }));
   }
   done();
 });
 
 gulp.task(TASK_NAME.HTML, () => {
-  return (
-    gulp.src('./src/pages/**/*.html')
-      .pipe(changed('./docs/'))
-      .pipe(gulpInclude({
-        prefix: "@@",
-        basepath: "src/templates"
-      }))
-      .pipe(webpHtml())
-      .pipe(htmlclean())
-      .pipe(gulp.dest('./docs/'))
-  )
+  return gulp
+    .src('./src/pages/**/*.html')
+    .pipe(changed('./docs/'))
+    .pipe(
+      gulpInclude({
+        prefix: '@@',
+        basepath: 'src/templates',
+      }),
+    )
+    .pipe(webpHtml())
+    .pipe(htmlclean())
+    .pipe(gulp.dest('./docs/'));
 });
 
 gulp.task(TASK_NAME.STYLES, () => {
-  return (
-    gulp.src('./src/styles/*.scss')
-      .pipe(sass())
-      .pipe(autoprefixer())
-      .pipe(webpcss())
-      .pipe(groupMedia())
-      .pipe(csso())
-      .pipe(gulp.dest('./docs/styles/'))
-  )
+  return gulp
+    .src('./src/styles/*.scss')
+    .pipe(sass())
+    .pipe(autoprefixer())
+    .pipe(webpcss())
+    .pipe(groupMedia())
+    .pipe(csso())
+    .pipe(gulp.dest('./docs/styles/'));
 });
 
 gulp.task(TASK_NAME.SCRIPTS, () => {
-  return (
-    gulp.src('./src/scripts/*.js')
-      .pipe(changed('./docs/scripts/'))
-      .pipe(babel())
-      .pipe(webpack(require('../webpack.config.js')))
-      .pipe(gulp.dest('./docs/scripts'))
-  )
-})
+  return gulp
+    .src('./src/scripts/*.js')
+    .pipe(changed('./docs/scripts/'))
+    .pipe(babel())
+    .pipe(webpack(require('../webpack.config.js')))
+    .pipe(gulp.dest('./docs/scripts'));
+});
 
 gulp.task(TASK_NAME.IMAGES, () => {
-  return (
-    gulp.src('./src/images/**/*')
-      .pipe(changed('./docs/images/'))
+  return gulp
+    .src('./src/images/**/*')
+    .pipe(changed('./docs/images/'))
 
-      .pipe(webp())
-      .pipe(gulp.dest('./docs/images/'))
+    .pipe(webp())
+    .pipe(gulp.dest('./docs/images/'))
 
-      .pipe(gulp.src('./src/images/**/*'))
-      .pipe(imagemin({ verbose: true }))
-      .pipe(gulp.dest('./docs/images/'))
-  )
+    .pipe(gulp.src('./src/images/**/*'))
+    .pipe(imagemin({ verbose: true }))
+    .pipe(gulp.dest('./docs/images/'));
 });
 
 gulp.task(TASK_NAME.FONTS, () => {
-  return (
-    gulp.src('./src/fonts/**/*')
-      .pipe(changed('./docs/fonts/'))
-      .pipe(gulp.dest('./docs/fonts/'))
-  )
+  return gulp.src('./src/fonts/**/*').pipe(changed('./docs/fonts/')).pipe(gulp.dest('./docs/fonts/'));
 });
 
 gulp.task(TASK_NAME.FILES, () => {
-  return (
-    gulp.src('./src/files/**/*')
-      .pipe(changed('./docs/files/'))
-      .pipe(gulp.dest('./docs/files/'))
-  )
+  return gulp.src('./src/files/**/*').pipe(changed('./docs/files/')).pipe(gulp.dest('./docs/files/'));
 });
 
 gulp.task(TASK_NAME.SERVER, () => {
-  return (
-    gulp.src('./docs/')
-      .pipe(server({
-        livereload: true,
-        open: true
-      }))
-  )
+  return gulp.src('./docs/').pipe(
+    server({
+      livereload: true,
+      open: true,
+    }),
+  );
 });
 
-gulp.task(TASK_NAME.STATIC, gulp.series(TASK_NAME.IMAGES, TASK_NAME.FONTS, TASK_NAME.FILES))
+gulp.task(TASK_NAME.STATIC, gulp.series(TASK_NAME.IMAGES, TASK_NAME.FONTS, TASK_NAME.FILES));

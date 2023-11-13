@@ -1,17 +1,17 @@
 module.exports = {
-  BUILD: "build",
-  DEFAULT: "default",
-  CLEAN: "clean",
+  BUILD: 'build',
+  DEFAULT: 'default',
+  CLEAN: 'clean',
 
-  HTML: "html",
-  STYLES: "styles",
+  HTML: 'html',
+  STYLES: 'styles',
   SCRIPTS: 'scripts',
 
-  IMAGES: "images",
-  FONTS: "fonts",
-  FILES: "files",
-  STATIC: "static",
+  IMAGES: 'images',
+  FONTS: 'fonts',
+  FILES: 'files',
+  STATIC: 'static',
 
-  SERVER: "server",
-  WATCH: "watch",
-}
+  SERVER: 'server',
+  WATCH: 'watch',
+};

@@ -13,86 +13,69 @@ const webpack = require('webpack-stream');
 const babel = require('gulp-babel');
 const changed = require('gulp-changed');
 
-const TASK_NAME = require('./tasks-dev.js')
+const TASK_NAME = require('./tasks-dev.js');
 
 gulp.task(TASK_NAME.CLEAN, (done) => {
   if (fs.existsSync('./dist')) {
-    return (
-      gulp.src('./dist/', { read: false })
-        .pipe(clean({ force: true }))
-    )
+    return gulp.src('./dist/', { read: false }).pipe(clean({ force: true }));
   }
   done();
-})
+});
 
 gulp.task(TASK_NAME.HTML, () => {
-  return (
-    gulp.src('./src/pages/**/*.html')
-      .pipe(changed('./dist/', {hasChanged: changed.compareContents}))
-      .pipe(gulpInclude({
-        prefix: "@@",
-        basepath: "src/templates"
-      }))
-      .pipe(gulp.dest('./dist/'))
-  )
+  return gulp
+    .src('./src/pages/**/*.html')
+    .pipe(changed('./dist/', { hasChanged: changed.compareContents }))
+    .pipe(
+      gulpInclude({
+        prefix: '@@',
+        basepath: 'src/templates',
+      })
+    )
+    .pipe(gulp.dest('./dist/'));
 });
 
 gulp.task(TASK_NAME.STYLES, () => {
-  return (
-    gulp.src('./src/styles/*.scss')
-      .pipe(sourceMaps.init())
-      .pipe(sass())
-      .pipe(sourceMaps.write())
-      .pipe(gulp.dest('./dist/styles/'))
-  )
+  return gulp.src('./src/styles/*.scss').pipe(sourceMaps.init()).pipe(sass()).pipe(sourceMaps.write()).pipe(gulp.dest('./dist/styles/'));
 });
 
 gulp.task(TASK_NAME.SCRIPTS, () => {
-  return (
-    gulp.src('./src/scripts/*.js')
-      .pipe(changed('./dist/scripts/'))
-      .pipe(babel())
-      .pipe(webpack(require('../webpack.config.js')))
-      .pipe(gulp.dest('./dist/scripts'))
-  )
-})
+  return gulp
+    .src('./src/scripts/*.js')
+    .pipe(changed('./dist/scripts/'))
+    .pipe(babel())
+    .pipe(webpack(require('../webpack.config.js')))
+    .pipe(gulp.dest('./dist/scripts'));
+});
 
 gulp.task(TASK_NAME.IMAGES, () => {
   return (
-    gulp.src('./src/images/**/*')
+    gulp
+      .src('./src/images/**/*')
       .pipe(changed('./dist/images/'))
       //.pipe(imagemin({ verbose: true }))
       .pipe(gulp.dest('./dist/images/'))
-  )
+  );
 });
 
 gulp.task(TASK_NAME.FONTS, () => {
-  return (
-    gulp.src('./src/fonts/**/*')
-      .pipe(changed('./dist/fonts/'))
-      .pipe(gulp.dest('./dist/fonts/'))
-  )
+  return gulp.src('./src/fonts/**/*').pipe(changed('./dist/fonts/')).pipe(gulp.dest('./dist/fonts/'));
 });
 
 gulp.task(TASK_NAME.FILES, () => {
-  return (
-    gulp.src('./src/files/**/*')
-      .pipe(changed('./dist/files/'))
-      .pipe(gulp.dest('./dist/files/'))
-  )
+  return gulp.src('./src/files/**/*').pipe(changed('./dist/files/')).pipe(gulp.dest('./dist/files/'));
 });
 
 gulp.task(TASK_NAME.SERVER, () => {
-  return (
-    gulp.src('./dist/')
-      .pipe(server({
-        livereload: true,
-        open: true
-      }))
-  )
+  return gulp.src('./dist/').pipe(
+    server({
+      livereload: true,
+      open: true,
+    })
+  );
 });
 
-gulp.task(TASK_NAME.STATIC, gulp.series(TASK_NAME.IMAGES, TASK_NAME.FONTS, TASK_NAME.FILES))
+gulp.task(TASK_NAME.STATIC, gulp.series(TASK_NAME.IMAGES, TASK_NAME.FONTS, TASK_NAME.FILES));
 
 gulp.task(TASK_NAME.WATCH, () => {
   gulp.watch('./src/styles/**/*.scss', gulp.series(TASK_NAME.STYLES));
