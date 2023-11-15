@@ -1,6 +1,9 @@
 .sidebar {
   background-color: bisque;
   padding: 2rem;
+  @media all and (max-width: 960px) {
+    display: none;
+  }
 }
 
 .sidebar nav {

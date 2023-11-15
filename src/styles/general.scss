@@ -2,11 +2,13 @@
 @import './global/global';
 @import './blocks/header';
 @import './blocks/footer';
+@import './blocks/burger';
 
 .site-wrapper {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 .content {
@@ -18,14 +20,16 @@
   &.without-navbar {
     grid-template-columns: 1fr;
   }
+
+  @media all and (max-width: 960px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 nav {
   ul {
     margin: 0;
     padding: 0;
-    list-style: 0;
-
     li {
       list-style: none;
     }

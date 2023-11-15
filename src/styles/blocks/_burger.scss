@@ -1,0 +1,141 @@
+.burger {
+  //customizable-variables
+  --transform: -110%;
+  --menu-items-text-align: left;
+  --burger-content-width: 480px;
+  --animation-effect: ease 0.4s;
+  --burger-contenet-background: #fff;
+  --wrapper-background: rgba(0, 0, 0, 0.5);
+  --burger-alignment: flex-start;
+  --inner-paddings: 12px;
+
+  // constatn-variables
+  --opacity: 0;
+  --visibility: hidden;
+  --pointer-events: none;
+  --z-index: 10000000;
+
+  &[data-right] {
+    --transform: 110%;
+    --burger-alignment: flex-end;
+  }
+
+  &.opened {
+    --transform: 0;
+    --opacity: 1;
+    --visibility: visible;
+    --pointer-events: all;
+  }
+}
+
+.burger {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: var(--burger-alignment);
+  pointer-events: var(--pointer-events);
+  z-index: var(--z-index);
+
+  &__backdrop {
+    position: absolute;
+    inset: 0;
+    opacity: var(--opacity);
+    visibility: var(--visibility);
+    background: var(--wrapper-background);
+    transition: var(--animation-effect);
+  }
+
+  &__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    max-width: var(--burger-content-width);
+    width: 100%;
+    min-height: 100vh;
+    background: var(--burger-contenet-background);
+
+    transform: translateX(var(--transform));
+    transition: var(--animation-effect);
+  }
+
+  &__header {
+    position: relative;
+    padding: var(--inner-paddings);
+    min-height: 80px;
+    border-bottom: 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  &__content {
+    padding: var(--inner-paddings);
+    flex-grow: 1;
+    overflow: auto;
+    padding-bottom: 30px;
+  }
+
+  &__menu {
+    margin: 0;
+    padding: 0;
+
+    gap: 5px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24px;
+
+    li {
+      list-style: none;
+      text-align: var(--menu-items-text-align);
+    }
+
+    a {
+      text-decoration: none;
+      color: #000;
+    }
+  }
+
+  &__footer {
+    padding: var(--inner-paddings);
+    min-height: 80px;
+    border-top: 1px solid;
+  }
+
+  &__close {
+    display: block;
+    width: 50px;
+    height: 50px;
+    border: 0;
+    cursor: pointer;
+    background-image: url('../images/close.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
+// Menu custom styles
+.burger__content {
+  h5 {
+    margin: 0;
+  }
+
+  ul li a {
+    text-decoration: none;
+    display: block;
+    padding: 12px;
+    border: 1px solid #000;
+
+    transition: ease 0.4s;
+    border-radius: 4px;
+    &:hover {
+      color: #fff;
+      background: #000;
+    }
+  }
+
+  & > ul ul {
+    padding-left: 12px;
+  }
+}
